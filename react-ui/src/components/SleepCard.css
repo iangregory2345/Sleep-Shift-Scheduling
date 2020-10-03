@@ -23,3 +23,9 @@
 .progressBar{
     height: 120px
 }
+
+.h1-font{
+    color: black;
+    margin-top: 19px;
+    font-size: 2rem;
+}

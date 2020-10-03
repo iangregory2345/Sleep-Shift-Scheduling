@@ -35,7 +35,7 @@ class SleepCard extends Component {
                 })}
               >
               </CircularProgressbar>
-              <h1 style={{ 'color': "black", "marginTop": "9px" }}>Hours of Sleep</h1>
+              <h1 className={"h1-font"}>Hours of Sleep</h1>
             </div>
           </Card.ImgOverlay>
         </Card>
