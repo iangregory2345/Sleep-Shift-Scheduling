@@ -1,0 +1,25 @@
+.flexContainer{
+
+    display: flex;
+}
+
+.flex-child-1 {
+    width: 50%;
+    float: left;
+    border: 2px solid red;
+}  
+
+.flex-child-2 {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid blue;
+    flex-direction: column;
+    /* display: flex;
+    align-items: center;
+    justify-content: center  */
+}
+
+.progressBar{
+    height: 120px
+}

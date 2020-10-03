@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import './Home.css';
 import Button from '@material-ui/core/Button';
+import SleepCard from "./SleepCard";
 
 class Home extends Component {
   constructor() {
@@ -16,13 +17,15 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div>
-            <h1>{this.state.title}</h1> 
-            <h1>{this.props.message}</h1>
-        </div>
-        <div>
-            <Button variant="contained" onClick={()=>this.changeTitle()}>Change Title</Button>
-        </div>
+        <SleepCard></SleepCard>
+        <p>
+
+        </p>
+        <SleepCard></SleepCard>
+        <p>
+          
+        </p>
+        <SleepCard></SleepCard>
       </div>
     );
   }
