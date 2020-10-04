@@ -26,13 +26,21 @@ class Home extends Component {
 
   render() {
     console.log(this.props)
+    try {
+      var { usualSleepStart, usualSleepEnd } = this.props.location.props.location.props
+    } catch (error) {
+      var usualSleepStart = "";
+      var usualSleepEnd = "";
+    }
+
+    console.log(usualSleepStart, usualSleepEnd)
     return (
       <div>
-        <Bar {...this.props}></Bar>
+        <Bar {...this.props} usualSleepStart usualSleepEnd></Bar>
         <div style={{ position: "relative", top: "50px" }}>
           <SleepCard></SleepCard>
           <p> </p>
-          <ExerciseCard onClick={()=> this.exerciseClick()}></ExerciseCard>
+          <ExerciseCard onClick={() => this.exerciseClick()}></ExerciseCard>
           <p> </p>
           <Schedule></Schedule>
         </div>

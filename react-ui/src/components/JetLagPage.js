@@ -14,6 +14,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 class JetLagPage extends Component {
   constructor() {
     super();
+    this.state = {
+      departureCity: "",
+      arrivalCity: "",
+      startShift: ""
+    }
   }
 
   city_timezones = [
@@ -17203,28 +17208,54 @@ class JetLagPage extends Component {
   arrival_timezone = this.city_timezones.filter(e => e[0].includes("United States") || e[0].includes("Japan") || e[0].includes("United Kingdom")).sort()
 
   onClick = () => {
+    var config = {
+      departureCity: this.state.departureCity[0],
+      departureTimezone: this.state.departureCity[1],
+      departureDatetime: document.getElementById('dtime').value.replace("T", " "),
+      arrivalCity: this.state.arrivalCity[0],
+      arrivalTimezone: this.state.arrivalCity[1],
+      arrivalDatetime: document.getElementById('atime').value.replace("T", " "),
+      sleepTime: document.getElementById('sleepStart').value,
+      wakeTime:  document.getElementById('sleepEnd').value,
+      planStart: this.state.startShift,
+      shiftSpeed: window.JetLag.Constants.SHIFT_SPEED_IMMEDIATE
+    }
+    console.log("params:", config)
+    var core = new window.JetLag.Core();
+    var plan = core.getPlan(config);
+    console.log(plan.getAllEvents())
     this.props.history.push({
-      pathname: "/userinfo",
+      pathname: "/jetlagschedule",
+      props: plan.getAllEvents()
     })
   }
 
   render() {
-    var config = {
-      departureCity: "New York City, United States",
-      departureTimezone: "America/New_York",
-      departureDatetime: "2016-05-08 21:30",
-      arrivalCity: "Paris, France",
-      arrivalTimezone: "Europe/Paris",
-      arrivalDatetime: "2016-05-09 11:05",
-      sleepTime: "22:00",
-      wakeTime: "06:00",
-      planStart: window.JetLag.Constants.PLAN_START_3_DAYS_ADVANCE,
-      shiftSpeed: window.JetLag.Constants.SHIFT_SPEED_IMMEDIATE
-    }
+    // var config = {
+    //   departureCity: "New York City, United States",
+    //   departureTimezone: "America/New_York",
+    //   departureDatetime: "2016-05-08 21:30",
+    //   arrivalCity: "Paris, France",
+    //   arrivalTimezone: "Europe/Paris",
+    //   arrivalDatetime: "2016-05-09 11:05",
+    //   sleepTime: "22:00",
+    //   wakeTime: "06:00",
+    //   planStart: window.JetLag.Constants.PLAN_START_3_DAYS_ADVANCE,
+    //   shiftSpeed: window.JetLag.Constants.SHIFT_SPEED_IMMEDIATE
+    // }
 
-    var core = new window.JetLag.Core();
-    var plan = core.getPlan(config);
-    console.log(plan)
+    // var core = new window.JetLag.Core();
+    // var plan = core.getPlan(config);
+    // console.log(plan)
+    console.log(this.props)
+    try {
+      var {usualSleepStart, usualSleepEnd} = this.props.location.props.location.props
+    } catch (error) {
+      var usualSleepStart = "";
+      var usualSleepEnd = "";
+    }
+    
+    console.log(usualSleepStart, usualSleepEnd)
     return (
       <div>
         <h1 className={"title"}>Jet Fighter <AvTimerIcon fontSize="large"></AvTimerIcon></h1>
@@ -17234,6 +17265,10 @@ class JetLagPage extends Component {
             id="departure_city"
             options={this.departure_timezone}
             getOptionLabel={(e) => e[0]}
+            onChange={(event, newValue) => {
+              this.setState({departureCity: newValue});
+            }}
+            value={this.state.departureCity !== "" ? this.state.departureCity : null}
             style={{ width: 242 }}
             renderInput={(params) => <TextField {...params} label="Departure City" variant="outlined" />}
           />
@@ -17243,16 +17278,20 @@ class JetLagPage extends Component {
             id="arrival_city"
             options={this.arrival_timezone}
             getOptionLabel={(e) => e[0]}
+            onChange={(event, newValue) => {
+              this.setState({arrivalCity: newValue});
+            }}
+            value={this.state.arrivalCity !== "" ? this.state.arrivalCity : null}
             style={{ width: 242 }}
             renderInput={(params) => <TextField {...params} label="Arrival City" variant="outlined" />}
           />
         </div>
         <TextField
           style={{ top: "130px" }}
-          id="time"
+          id="dtime"
           label="Departure Time"
           type="datetime-local"
-          defaultValue="2020-05-24T09:00"
+          defaultValue="2020-10-04T09:00"
           InputLabelProps={{
             shrink: true,
           }}
@@ -17262,10 +17301,10 @@ class JetLagPage extends Component {
         />
         <TextField
           style={{ top: "140px" }}
-          id="time"
+          id="atime"
           label="Arrival Time"
           type="datetime-local"
-          defaultValue="2020-05-24T10:00"
+          defaultValue="2020-10-04T10:00"
           InputLabelProps={{
             shrink: true,
           }}
@@ -17279,10 +17318,10 @@ class JetLagPage extends Component {
         <div className={"lag-flex-container"}>
           <TextField
             style={{ left: "50px" }}
-            id="time"
+            id="sleepStart"
             label="Start"
             type="time"
-            defaultValue="09:00"
+            defaultValue="22:00"
             InputLabelProps={{
               shrink: true,
             }}
@@ -17293,10 +17332,10 @@ class JetLagPage extends Component {
           <h4 style={{ position: "relative", left: "70px", color: "#38383a", top: "10px" }}>-</h4>
           <TextField
             style={{ left: "96px" }}
-            id="time"
+            id="sleepEnd"
             label="Wake"
             type="time"
-            defaultValue="17:00"
+            defaultValue="07:00"
             InputLabelProps={{
               shrink: true,
             }}
@@ -17308,18 +17347,20 @@ class JetLagPage extends Component {
 
         <div style={{ position: "relative", top: "190px" }}>
           <FormControl variant="outlined" style={{ width: "270px" }}>
-            <InputLabel id="demo-simple-select-outlined-label">Start Shifting Sleep Schedule</InputLabel>
+            <InputLabel id="startshift1">Start Shifting Sleep Schedule</InputLabel>
             <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
-              label="Age"
+              value={this.state.startShift ? this.state.startShift : ""}
+              onChange={(e)=>{this.setState({startShift: e.target.value})}}
+              labelId="startshift1"
+              id="startshift"
+              label="startshift1"
             >
               {/* <MenuItem value="">
                 <em>None</em>
               </MenuItem> */}
-              <MenuItem value={1}>after arriving</MenuItem>
-              <MenuItem value={2}>after departing on the plane</MenuItem>
-              <MenuItem value={3}>3 days before departing</MenuItem>
+              <MenuItem value={window.JetLag.Constants.PLAN_START_ARRIVAL}>after arriving</MenuItem>
+              <MenuItem value={window.JetLag.Constants.PLAN_START_DEPARTURE}>after departing on the plane</MenuItem>
+              <MenuItem value={window.JetLag.Constants.PLAN_START_3_DAYS_ADVANCE}>3 days before departing</MenuItem>
             </Select>
           </FormControl>
         </div>

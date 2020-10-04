@@ -13,13 +13,15 @@ class UserInfo extends Component {
     constructor() {
         super();
         this.state = {
-            title: "Base title"
+            usualSleepStart: "",
+            usualSleepEnd: "",
         };
     }
 
     onClick = () => {
         this.props.history.push({
             pathname: "/home",
+            props: {...this.state},
         })
     }
 
