@@ -12,6 +12,7 @@ import StartPage from "./components/StartPage";
 import Home from "./components/Home";
 import JetLagPage from "./components/JetLagPage";
 import Exercise from "./components/Exercise";
+import ReactVirtualizedTable from "./components/Table";
 
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <Switch>
+              <Route path="/jetlagschedule" exact render={(props) => <ReactVirtualizedTable {...props}/>}/>
               <Route path="/home" exact render={(props) => <Home {...props}/>}/>
               <Route path="/exercise" exact render={(props) => <Exercise {...props}/>}/>
               <Route path="/" exact render={(props) => <StartPage {...props}/>}/>
