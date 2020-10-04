@@ -11,6 +11,7 @@ import UserInfo from "./components/UserInfo";
 import StartPage from "./components/StartPage";
 import Home from "./components/Home";
 import JetLagPage from "./components/JetLagPage";
+import Exercise from "./components/Exercise";
 
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
           <header className="App-header">
             <Switch>
               <Route path="/home" exact render={(props) => <Home {...props}/>}/>
+              <Route path="/exercise" exact render={(props) => <Exercise {...props}/>}/>
               <Route path="/" exact render={(props) => <StartPage {...props}/>}/>
               <Route path="/userinfo" exact render={(props) => <UserInfo {...props}/>}/>
               <Route path="/jetlag" exact render={(props) => <JetLagPage {...props}/>}/>

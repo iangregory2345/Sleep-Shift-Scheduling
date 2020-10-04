@@ -18,6 +18,12 @@ class Home extends Component {
     })
   }
 
+  exerciseClick = () => {
+    this.props.history.push({
+      pathname: "/exercise",
+    })
+  }
+
   render() {
     console.log(this.props)
     return (
@@ -26,7 +32,7 @@ class Home extends Component {
         <div style={{ position: "relative", top: "50px" }}>
           <SleepCard></SleepCard>
           <p> </p>
-          <ExerciseCard></ExerciseCard>
+          <ExerciseCard onClick={()=> this.exerciseClick()}></ExerciseCard>
           <p> </p>
           <Schedule></Schedule>
         </div>
