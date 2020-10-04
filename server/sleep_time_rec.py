@@ -122,12 +122,25 @@ class Schedule:
 
 
 if __name__ == "__main__":
-    if (sys.argv.count == 4):
-        sleep = Schedule(
-            sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
-    else:
-        sleep = Schedule(9, 17, 1, 27, 7)
-        print(sleep)
+    # if (sys.argv.count == 4):
+    sleep = Schedule(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+    print({"sleep_hours": sleep.sleep_hours, "exercise_time": sleep.exercise_time, "exercise_hours": sleep.exercise_hours})
+    # else:
+    #     sleep = Schedule(9, 17, 1, 27, 7)
+    #     # print(sleep)
+    #     print({"sleep_hours": sleep.sleep_hours, "exercise_time": sleep.exercise_time, "exercise_hours": sleep.exercise_hours})
+    #     print(sleep.sleep_hours)
+    #     print(sleep.sleep_time)
+    # # breakfast_hours = -1
+    # # breakfast_time = -1
+    # # lunch_hours = -1
+    # # lunch_time = -1
+    # # afternoon_snack_time = -1
+    # # dinner_hours = -1
+    # # dinner_time = -1
+    # print(sleep.exercise_time)
+    # print(sleep.exercise_hours)
+
 
         # sleep = Schedule(9, 17, 1, 27, None)
         # print(sleep)

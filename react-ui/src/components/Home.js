@@ -45,7 +45,7 @@ class Home extends Component {
           <p> </p>
           <ExerciseCard onClick={() => this.exerciseClick()}></ExerciseCard>
           <p> </p>
-          <Schedule></Schedule>
+          {/* <Schedule></Schedule> */}
         </div>
       </div>
     );
