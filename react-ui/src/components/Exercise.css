@@ -1,0 +1,20 @@
+.paper_exercise_time{
+    text-align: center;
+    background: transparent !important;
+    font-size: xx-large;
+}
+
+.slide-container{
+    margin-top: 80px;
+}
+
+.paper_exercise_tips{
+    margin-left: 30px;
+    margin-right: 30px;
+    background: transparent !important;
+    font-size: x-large;
+}
+
+.workout_card{
+    background: plum !important;
+}
