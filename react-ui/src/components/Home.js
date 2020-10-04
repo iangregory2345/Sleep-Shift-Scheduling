@@ -1,31 +1,35 @@
 
 import React, { Component } from "react";
+import Bar from "./Bar";
+import ExerciseCard from "./ExerciseCard";
 import './Home.css';
-import Button from '@material-ui/core/Button';
+import Schedule from "./Schedule";
 import SleepCard from "./SleepCard";
 
 class Home extends Component {
   constructor() {
     super();
-    this.state = {
-      title: "Base title"
-    };
   }
 
-  changeTitle = () => this.setState({title: "New Title"})
+
+  onClick = () => {
+    this.props.history.push({
+      pathname: "/userinfo",
+    })
+  }
 
   render() {
+    console.log(this.props)
     return (
       <div>
-        <SleepCard></SleepCard>
-        <p>
-
-        </p>
-        <SleepCard></SleepCard>
-        <p>
-          
-        </p>
-        <SleepCard></SleepCard>
+        <Bar {...this.props}></Bar>
+        <div style={{ position: "relative", top: "50px" }}>
+          <SleepCard></SleepCard>
+          <p> </p>
+          <ExerciseCard></ExerciseCard>
+          <p> </p>
+          <Schedule></Schedule>
+        </div>
       </div>
     );
   }

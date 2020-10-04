@@ -7,7 +7,10 @@ import {
   Redirect
 } from "react-router-dom"
 
-import Home from './components/Home'
+import UserInfo from "./components/UserInfo";
+import StartPage from "./components/StartPage";
+import Home from "./components/Home";
+import JetLagPage from "./components/JetLagPage";
 
 
 class App extends Component {
@@ -25,9 +28,10 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <Switch>
-              <Route path="/" exact>
-                <Home message={"From parent"}></Home>
-              </Route>
+              <Route path="/home" exact render={(props) => <Home {...props}/>}/>
+              <Route path="/" exact render={(props) => <StartPage {...props}/>}/>
+              <Route path="/userinfo" exact render={(props) => <UserInfo {...props}/>}/>
+              <Route path="/jetlag" exact render={(props) => <JetLagPage {...props}/>}/>
             </Switch>
           </header>
         </div>

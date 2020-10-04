@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import './SleepCard.css';
+import './ExerciseCard.css';
 import Card from 'react-bootstrap/Card'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -14,53 +14,38 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-import bed from '../assets/bed.png'
+import exercise from '../assets/exercise.png';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 
 
-class SleepCard extends Component {
+class ExerciseCard extends Component {
   constructor() {
     super();
     this.state = {
-      showModal: false,
-      sleep: 0
+      showModal: false
     };
   }
 
   handleClose = () => this.setState({ showModal: false })
 
-  updateSleep = (newSleep) => this.setState({ sleep: newSleep})
-
   render() {
     return (
       <div>
         <Card className="bg-dark text-white">
-          <Card.Img className={"cards"} src={bed} alt="Card image" />
+          <Card.Img className={"cards"} src={exercise} alt="Card image" />
           <Card.ImgOverlay onClick={() => this.setState({ showModal: true })}>
             {/* <Card.Title>Card title</Card.Title> */}
             <div className={"flexContainer"}>
               <div className={"flex-child-1"}>
-                <CircularProgressbar
-                  value={this.state.sleep}
-                  maxValue={12}
-                  text={this.state.sleep}
-                  className={"progressBar"}
-                  strokeWidth={20}
-                  styles={buildStyles({
-                    textSize: "15px",
-                    textColor: "#312f2f",
-                    pathColor: this.state.sleep > 9 ? "yellow" : this.state.sleep < 6 ? "red" : "green",
-                    trailColor: "white"
-                  })}
-                >
-                </CircularProgressbar>
+                <FitnessCenterIcon className={"MuiSvgIcon-root-exercise"}  fontSize="large"></FitnessCenterIcon>
               </div>
-              <div className={"flex-child-2"}>
-                <h1 className={"h1-font"}>Hours of Sleep</h1>
+              <div className={"exercise-flex-child-2"}>
+                <h1 className={"h1-font"}>Exercise</h1>
               </div>
             </div>
           </Card.ImgOverlay>
         </Card>
-        <SleepModal updateSleep={(s)=>this.updateSleep(s)} open={this.state.showModal} handleClose={() => this.handleClose()}></SleepModal>
+        <SleepModal open={this.state.showModal} handleClose={() => this.handleClose()}></SleepModal>
       </div>
     );
   }
@@ -119,10 +104,10 @@ function SleepModal(props) {
         </DialogTitle>
       <DialogContent dividers>
         <p>How many hours have you slept today?</p>
-        <PrettoSlider valueLabelDisplay="auto" aria-label="pretto slider" value={typeof value === 'number' ? value : 0} onChange={(e, v) => handleSliderChange(e, v)} defaultValue={12} max={12} min={0} />
+        <PrettoSlider valueLabelDisplay="auto" aria-label="pretto slider" value={typeof value === 'number' ? value : 0} onChange={(e, v) => handleSliderChange(e, v)} defaultValue={12} max={24} min={0} />
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={()=> {props.updateSleep(value); props.handleClose()}} color="primary">
+        <Button autoFocus onClick={props.handleClose} color="primary">
           Save changes
           </Button>
       </DialogActions>
@@ -160,4 +145,4 @@ const PrettoSlider = withStyles({
   },
 })(Slider);
 
-export default SleepCard;
+export default ExerciseCard;
