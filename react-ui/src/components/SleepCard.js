@@ -15,7 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import bed from '../assets/bed.png'
-
+import InfoIcon from '@material-ui/icons/Info';
 
 class SleepCard extends Component {
   constructor() {
@@ -28,9 +28,30 @@ class SleepCard extends Component {
 
   handleClose = () => this.setState({ showModal: false })
 
-  updateSleep = (newSleep) => this.setState({ sleep: newSleep})
+  updateSleep = (newSleep) => this.setState({ sleep: newSleep })
+
+  getOptimalSleepForAge = (age) => {
+    console.log("age", age)
+    if (6 <= age && age <= 13)
+      return [10, 13]
+
+    else if (14 <= age && age <= 17)
+      return [8, 10]
+
+    else if (18 <= age && age <= 64)
+      return [7, 9]
+
+    else if (65 <= age)
+      return [7, 8]
+
+    else
+      return [0,0]
+  }
 
   render() {
+    // console.log("Sleep", Number(this.props.age))
+    const [low, high] = this.getOptimalSleepForAge(Number(this.props.age))
+    console.log(low, high)
     return (
       <div>
         <Card className="bg-dark text-white">
@@ -48,7 +69,7 @@ class SleepCard extends Component {
                   styles={buildStyles({
                     textSize: "15px",
                     textColor: "#312f2f",
-                    pathColor: this.state.sleep > 9 ? "yellow" : this.state.sleep < 6 ? "red" : "green",
+                    pathColor: this.state.sleep > high ? "yellow" : this.state.sleep < low ? "red" : "green",
                     trailColor: "white"
                   })}
                 >
@@ -60,7 +81,7 @@ class SleepCard extends Component {
             </div>
           </Card.ImgOverlay>
         </Card>
-        <SleepModal updateSleep={(s)=>this.updateSleep(s)} open={this.state.showModal} handleClose={() => this.handleClose()}></SleepModal>
+        <SleepModal low={low} high={high} updateSleep={(s) => this.updateSleep(s)} open={this.state.showModal} handleClose={() => this.handleClose()}></SleepModal>
       </div>
     );
   }
@@ -120,9 +141,10 @@ function SleepModal(props) {
       <DialogContent dividers>
         <p>How many hours have you slept today?</p>
         <PrettoSlider valueLabelDisplay="auto" aria-label="pretto slider" value={typeof value === 'number' ? value : 0} onChange={(e, v) => handleSliderChange(e, v)} defaultValue={12} max={12} min={0} />
+        <small><InfoIcon fontSize="small" /> Optimal Sleep for you would be between {props.low}-{props.high} hours</small>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={()=> {props.updateSleep(value); props.handleClose()}} color="primary">
+        <Button autoFocus onClick={() => { props.updateSleep(value); props.handleClose() }} color="primary">
           Save changes
           </Button>
       </DialogActions>

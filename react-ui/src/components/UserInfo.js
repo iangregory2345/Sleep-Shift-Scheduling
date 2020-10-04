@@ -19,9 +19,12 @@ class UserInfo extends Component {
     }
 
     onClick = () => {
+        const props = {usualSleepStart: document.getElementById('sleepStart').value, usualSleepEnd:  document.getElementById('sleepEnd').value, 
+        age: document.getElementById('age').value, workStart: document.getElementById('workStart').value, workEnd: document.getElementById('workEnd').value}
+        console.log(props)
         this.props.history.push({
             pathname: "/home",
-            props: {...this.state},
+            props,
         })
     }
 
@@ -29,12 +32,12 @@ class UserInfo extends Component {
         return (
             <div>
                 <h1 className={"title"}>Nap Time <NightsStayIcon fontSize="large"></NightsStayIcon></h1>
-                <TextField className={"name-field"} id="outlined-basic" label="Age" variant="outlined" type="number" />
+                <TextField className={"name-field"} id="age" label="Age" variant="outlined" type="number" />
                 <h4 className="work-title">Work Time</h4>
                 <div className={"flex-container"}>
                     <TextField
                         style={{ left: "50px" }}
-                        id="time"
+                        id="workStart"
                         label="Start"
                         type="time"
                         defaultValue="09:00"
@@ -48,7 +51,7 @@ class UserInfo extends Component {
                     <h4 style={{ position: "relative", left: "70px", color: "#38383a", top: "10px" }}>-</h4>
                     <TextField
                         style={{ left: "96px" }}
-                        id="time"
+                        id="workEnd"
                         label="End"
                         type="time"
                         defaultValue="17:00"
@@ -84,10 +87,10 @@ class UserInfo extends Component {
                 <div className={"sleep-flex-container"}>
                     <TextField
                         style={{ left: "50px" }}
-                        id="time"
+                        id="sleepStart"
                         label="Start"
                         type="time"
-                        defaultValue="09:00"
+                        defaultValue="22:00"
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -98,10 +101,10 @@ class UserInfo extends Component {
                     <h4 style={{ position: "relative", left: "70px", color: "#38383a", top: "10px" }}>-</h4>
                     <TextField
                         style={{ left: "96px" }}
-                        id="time"
+                        id="sleepEnd"
                         label="Wake"
                         type="time"
-                        defaultValue="17:00"
+                        defaultValue="07:00"
                         InputLabelProps={{
                             shrink: true,
                         }}
